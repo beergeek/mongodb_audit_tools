@@ -1,0 +1,58 @@
+---
+
+# Variables
+variables:
+  - &script_owner 'root'
+  - &script_group 'root'
+  - &script_mode '0744'
+  - &timeout 1000
+
+mongodb_audit_tools::ops_manager_event_watcher::enable_debugging: false
+mongodb_audit_tools::ops_manager_event_watcher::enable_kerberos_debugging: false
+mongodb_audit_tools::ops_manager_event_watcher::audit_db_timeout: *timeout
+mongodb_audit_tools::ops_manager_event_watcher::om_db_timeout: *timeout
+mongodb_audit_tools::ops_manager_event_watcher::script_owner: *script_owner
+mongodb_audit_tools::ops_manager_event_watcher::script_group: *script_group
+mongodb_audit_tools::ops_manager_event_watcher::script_mode: *script_mode
+mongodb_audit_tools::ops_manager_event_watcher::change_stream_pipeline: ~
+mongodb_audit_tools::ops_manager_event_watcher::kerberos_file_path: ~
+mongodb_audit_tools::ops_manager_event_watcher::enable_om_db_ssl: false
+mongodb_audit_tools::ops_manager_event_watcher::enable_audit_db_ssl: false
+mongodb_audit_tools::ops_manager_event_watcher::audit_db_ssl_pem_file_path: ~
+mongodb_audit_tools::ops_manager_event_watcher::audit_db_ssl_ca_file_path: ~
+mongodb_audit_tools::ops_manager_event_watcher::om_db_ssl_pem_file_path: ~
+mongodb_audit_tools::ops_manager_event_watcher::om_db_ssl_ca_file_path: ~
+mongodb_audit_tools::ops_manager_event_watcher::kerberos_trace_path: ~
+
+mongodb_audit_tools::ops_manager_config_watcher::enable_debugging: false
+mongodb_audit_tools::ops_manager_config_watcher::enable_kerberos_debugging: false
+mongodb_audit_tools::ops_manager_config_watcher::audit_db_timeout: *timeout
+mongodb_audit_tools::ops_manager_config_watcher::om_db_timeout: *timeout
+mongodb_audit_tools::ops_manager_config_watcher::script_owner: *script_owner
+mongodb_audit_tools::ops_manager_config_watcher::script_group: *script_group
+mongodb_audit_tools::ops_manager_config_watcher::script_mode: *script_mode
+mongodb_audit_tools::ops_manager_config_watcher::change_stream_pipeline: ~
+mongodb_audit_tools::ops_manager_config_watcher::kerberos_file_path: ~
+mongodb_audit_tools::ops_manager_config_watcher::enable_om_db_ssl: false
+mongodb_audit_tools::ops_manager_config_watcher::enable_audit_db_ssl: false
+mongodb_audit_tools::ops_manager_config_watcher::audit_db_ssl_pem_file_path: ~
+mongodb_audit_tools::ops_manager_config_watcher::audit_db_ssl_ca_file_path: ~
+mongodb_audit_tools::ops_manager_config_watcher::om_db_ssl_pem_file_path: ~
+mongodb_audit_tools::ops_manager_config_watcher::om_db_ssl_ca_file_path: ~
+mongodb_audit_tools::ops_manager_config_watcher::kerberos_trace_path: ~
+
+mongodb_audit_tools::deployment_config_grabber::enable_debugging: false
+mongodb_audit_tools::deployment_config_grabber::enable_kerberos_debugging: false
+mongodb_audit_tools::deployment_config_grabber::audit_db_timeout: *timeout
+mongodb_audit_tools::deployment_config_grabber::om_api_timeout: *timeout
+mongodb_audit_tools::deployment_config_grabber::script_owner: *script_owner
+mongodb_audit_tools::deployment_config_grabber::script_group: *script_group
+mongodb_audit_tools::deployment_config_grabber::script_mode: *script_mode
+mongodb_audit_tools::deployment_config_grabber::change_stream_pipeline: ~
+mongodb_audit_tools::deployment_config_grabber::kerberos_file_path: ~
+mongodb_audit_tools::deployment_config_grabber::enable_audit_db_ssl: false
+mongodb_audit_tools::deployment_config_grabber::audit_db_ssl_pem_file_path: ~
+mongodb_audit_tools::deployment_config_grabber::audit_db_ssl_ca_file_path: ~
+mongodb_audit_tools::deployment_config_grabber::om_api_ssl_pem_file_path: ~
+mongodb_audit_tools::deployment_config_grabber::om_api_ssl_ca_file_path: ~
+mongodb_audit_tools::deployment_config_grabber::kerberos_trace_path: ~

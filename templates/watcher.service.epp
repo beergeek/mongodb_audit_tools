@@ -1,0 +1,18 @@
+[Unit]
+Description=Watcher Script for MongoDB Auditing
+After=network.target
+
+[Service]
+User=<%= $script_owner %>
+Group=<%= $script_group %>
+<% if $kerberos_file_path {-%>
+Environment="KRB5_KTNAME=<%= $kerberos_file_path %>"
+<% } -%>
+<% if $kerberos_file_path and $debug_kerberos {-%>
+Environment="KRB5_TRACE=<%= $kerberos_trace_path %>"
+<% } -%>
+ExecStart=python <%= $script_path %>
+Type=simple
+
+[Install]
+WantedBy=multi-user.target
