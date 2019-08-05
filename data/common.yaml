@@ -56,3 +56,19 @@ mongodb_audit_tools::deployment_config_grabber::audit_db_ssl_ca_file_path: ~
 mongodb_audit_tools::deployment_config_grabber::om_api_ssl_pem_file_path: ~
 mongodb_audit_tools::deployment_config_grabber::om_api_ssl_ca_file_path: ~
 mongodb_audit_tools::deployment_config_grabber::kerberos_trace_path: ~
+
+
+mongodb_audit_tools::log_processor::enable_audit_db_ssl: false
+mongodb_audit_tools::log_processor::enable_debugging: false
+mongodb_audit_tools::log_processor::enable_kerberos_debugging: false
+mongodb_audit_tools::log_processor::elevated_ops_events: ~
+mongodb_audit_tools::log_processor::elevated_app_events: ~
+mongodb_audit_tools::log_processor::kerberos_file_path: ~
+mongodb_audit_tools::log_processor::kerberos_trace_path: ~
+mongodb_audit_tools::log_processor::audit_db_ssl_pem_file_path: ~
+mongodb_audit_tools::log_processor::audit_db_ssl_ca_file_path: ~
+mongodb_audit_tools::log_processor::script_owner: *script_owner
+mongodb_audit_tools::log_processor::script_group: *script_group
+mongodb_audit_tools::log_processor::script_mode: *script_mode
+mongodb_audit_tools::log_processor::audit_db_timeout: *timeout
+mongodb_audit_tools::log_processor::audit_log: ~

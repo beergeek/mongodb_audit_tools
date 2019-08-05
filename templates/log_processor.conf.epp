@@ -1,0 +1,12 @@
+[audit_db]
+connection_string=<%= $audit_db_connection_string  %>
+timeout=<%= $audit_db_timeout %>
+ssl_enabled=<%= $enable_audit_db_ssl %>
+ssl_pem_path=<%= $audit_db_ssl_ca_file_path %>
+ssl_ca_cert_path=<%= $audit_db_ssl_pem_file_path %>
+
+[general]
+debug=<%= $enable_debugging %>
+audit_log=<%= $audit_log %>
+elevated_ops_events=<%= $elevated_ops_events %>
+elevated_app_events=<%= $elevated_app_events %>
