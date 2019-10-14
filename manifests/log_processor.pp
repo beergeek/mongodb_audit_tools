@@ -7,6 +7,8 @@
 define mongodb_audit_tools::log_processor (
   Mongodb_audit_tools::MongoDBURL $audit_db_connection_string,
   Stdlib::Absolutepath            $log_processor_dir,
+  String[1]                       $om_token,
+  String[1]                       $om_username,
 
   # Lookups from Hiera
   Boolean                         $enable_audit_db_ssl          = lookup('mongodb_audit_tools::log_processor::enable_audit_db_ssl'),
@@ -14,14 +16,20 @@ define mongodb_audit_tools::log_processor (
   Boolean                         $enable_kerberos_debugging    = lookup('mongodb_audit_tools::log_processor::enable_kerberos_debugging'),
   Optional[Array[String[1]]]      $elevated_ops_events          = lookup('mongodb_audit_tools::log_processor::elevated_ops_events'),
   Optional[Array[String[1]]]      $elevated_app_events          = lookup('mongodb_audit_tools::log_processor::elevated_app_events'),
-  Optional[Stdlib::Absolutepath]  $kerberos_file_path           = lookup('mongodb_audit_tools::log_processor::kerberos_file_path'),
+  Optional[Stdlib::Absolutepath]  $kerberos_keytab_path         = lookup('mongodb_audit_tools::log_processor::kerberos_keytab_path'),
   Optional[Stdlib::Absolutepath]  $kerberos_trace_path          = lookup('mongodb_audit_tools::log_processor::kerberos_trace_path'),
   Optional[Stdlib::Absolutepath]  $audit_db_ssl_pem_file_path   = lookup('mongodb_audit_tools::log_processor::audit_db_ssl_pem_file_path'),
   Optional[Stdlib::Absolutepath]  $audit_db_ssl_ca_file_path    = lookup('mongodb_audit_tools::log_processor::audit_db_ssl_ca_file_path'),
   Optional[Stdlib::Absolutepath]  $audit_log                    = lookup('mongodb_audit_tools::log_processor::audit_log'),
+  Optional[Stdlib::Absolutepath]  $python_path                  = lookup('mongodb_audit_tools::log_processor::python_path'),
+  Optional[Stdlib::Absolutepath]  $config_file_path             = lookup('mongodb_audit_tools::log_processor::config_file_path'),
+  Optional[Stdlib::Absolutepath]  $log_file_path                = lookup('mongodb_audit_tools::log_processor::log_file_path'),
   String[1]                       $script_owner                 = lookup('mongodb_audit_tools::log_processor::script_owner'),
   String[1]                       $script_group                 = lookup('mongodb_audit_tools::log_processor::script_group'),
   String[1]                       $script_mode                  = lookup('mongodb_audit_tools::log_processor::script_mode'),
+  String[1]                       $elevated_ops_events          = lookup('mongodb_audit_tools::log_processor::elevated_ops_events'),
+  String[1]                       $elevated_config_events       = lookup('mongodb_audit_tools::log_processor::elevated_config_events'),
+  String[1]                       $elevated_app_events          = lookup('mongodb_audit_tools::log_processor::elevated_app_events'),
   Integer[1]                      $audit_db_timeout             = lookup('mongodb_audit_tools::log_processor::audit_db_timeout'),
 ) {
 
@@ -68,9 +76,12 @@ define mongodb_audit_tools::log_processor (
     ensure  => file,
     mode    => '0644',
     content => epp('mongodb_audit_tools/watcher.service.epp', {
+      config_file_path          => $config_file_path,
       enable_kerberos_debugging => $enable_kerberos_debugging,
-      kerberos_file_path        => $kerberos_file_path,
+      kerberos_keytab_path      => $kerberos_keytab_path,
       kerberos_trace_path       => $kerberos_trace_path,
+      log_file_path             => $log_file_path,
+      python_path               => $python_path,
       script_group              => $script_group,
       script_owner              => $script_owner,
       script_path               => "${log_processor_dir}/${title}_log_processor.py",

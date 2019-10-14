@@ -14,6 +14,8 @@ describe 'mongodb_audit_tools::ops_manager_event_watcher' do
         audit_db_connection_string: 'mongodb://auditwriter%%40MONGODB.LOCAL@audit.mongodb.local:27017/?replicaSet=repl0&authSource=$external&authMechanism=GSSAPI',
         om_db_connection_string:    'mongodb://auditwriter%%40MONGODB.LOCAL@om.mongodb.local:27017/?replicaSet=repl0&authSource=$external&authMechanism=GSSAPI',
         event_watcher_dir:          '/data/scripts',
+        om_token: 'trvbunim-45678-rtyvubghinjm',
+        om_username: 'loudSam'
       }
     end
     it { is_expected.to compile }

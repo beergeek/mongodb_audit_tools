@@ -5,7 +5,9 @@ describe 'mongodb_audit_tools::log_processor' do
   let :params do
     {
       log_processor_dir:         '/data/scripts',
-      audit_db_connection_string: 'mongodb://auditwriter%%40MONGODB.LOCAL@audit.mongodb.local:27017/?replicaSet=repl0&authSource=$external&authMechanism=GSSAPI'
+      audit_db_connection_string: 'mongodb://auditwriter%%40MONGODB.LOCAL@audit.mongodb.local:27017/?replicaSet=repl0&authSource=$external&authMechanism=GSSAPI',
+      om_token: 'trvbunim-45678-rtyvubghinjm',
+      om_username: 'loudSam'
     }
   end
 

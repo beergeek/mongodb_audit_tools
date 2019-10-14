@@ -1,15 +1,22 @@
 [ops_manager]
 connection_string=<%= $om_api_connection_string %>
 timeout=<%= $om_api_timeout %>
+username=<%= $om_username %>
+token=<%= $om_token %>
+<% if $enable_om_ssl { -%>
 ssl_ca_cert_path=<%= $om_api_ssl_ca_file_path %>
 ssl_pem_path=<%= $om_api_ssl_pem_file_path %>
+<% } -%>
 
 [audit_db]
 connection_string=<%= $audit_db_connection_string  %>
 timeout=<%= $audit_db_timeout %>
+<% if $enable_audit_db_ssl { -%>
 ssl_enabled=<%= $enable_audit_db_ssl %>
 ssl_ca_cert_path=<%= $audit_db_ssl_ca_file_path %>
 ssl_pem_path=<%= $audit_db_ssl_pem_file_path %>
+<% } -%>
 
 [general]
 debug=<%= $enable_debugging %>
+excluded_root_keys=<%= $excluded_root_keys %>
