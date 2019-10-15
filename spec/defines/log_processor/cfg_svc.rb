@@ -1,6 +1,7 @@
 require 'spec_helper'
 
-describe 'mongodb_audit_tools::log_processor' do
+describe 'mongodb_audit_tools::log_processor::cfg_svc' do
+  let(:pre_condition) { 'include mongodb_audit_tools::log_processor::install'}
   let(:title) { 'logger' }
   let :params do
     {
@@ -21,18 +22,10 @@ describe 'mongodb_audit_tools::log_processor' do
     end
 
     it { is_expected.to compile }
-
-    it {
-      is_expected.to contain_file('/data/scripts/logger_log_processor.py').with(
-        'ensure' => 'file',
-        'owner'  => 'root',
-        'group'  => 'root',
-        'mode'   => '0744',
-      )
     }
 
     it {
-      is_expected.to contain_file('/data/scripts/logger_log_processor.conf').with(
+      is_expected.to contain_file('/data/scripts/logger.conf').with(
         'ensure' => 'file',
         'owner'  => 'root',
         'group'  => 'root',

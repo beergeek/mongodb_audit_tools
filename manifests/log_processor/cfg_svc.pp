@@ -1,14 +1,16 @@
-# @summary A short summary of the purpose of this defined type.
+# @summary Log processor.
 #
 # A description of what this defined type does
 #
 # @example
 #   mongodb_audit_tools::log_processor { 'namevar': }
-define mongodb_audit_tools::log_processor (
+define mongodb_audit_tools::log_processor::cfg_svc (
   Mongodb_audit_tools::MongoDBURL $audit_db_connection_string,
   Stdlib::Absolutepath            $log_processor_dir,
   String[1]                       $om_token,
   String[1]                       $om_username,
+  Stdlib::Absolutepath            $config_file_path             = "${log_processor_dir}/${title}.conf",
+  Stdlib::Absolutepath            $log_file_path                = "${log_processor_dir}/${title}.log",
 
   # Lookups from Hiera
   Boolean                         $enable_audit_db_ssl          = lookup('mongodb_audit_tools::log_processor::enable_audit_db_ssl'),
@@ -23,11 +25,8 @@ define mongodb_audit_tools::log_processor (
   Optional[Stdlib::Absolutepath]  $audit_db_ssl_ca_file_path    = lookup('mongodb_audit_tools::log_processor::audit_db_ssl_ca_file_path'),
   Optional[Stdlib::Absolutepath]  $audit_log                    = lookup('mongodb_audit_tools::log_processor::audit_log'),
   Optional[Stdlib::Absolutepath]  $python_path                  = lookup('mongodb_audit_tools::log_processor::python_path'),
-  Optional[Stdlib::Absolutepath]  $config_file_path             = lookup('mongodb_audit_tools::log_processor::config_file_path'),
-  Optional[Stdlib::Absolutepath]  $log_file_path                = lookup('mongodb_audit_tools::log_processor::log_file_path'),
   String[1]                       $script_owner                 = lookup('mongodb_audit_tools::log_processor::script_owner'),
   String[1]                       $script_group                 = lookup('mongodb_audit_tools::log_processor::script_group'),
-  String[1]                       $script_mode                  = lookup('mongodb_audit_tools::log_processor::script_mode'),
   Integer[1]                      $audit_db_timeout             = lookup('mongodb_audit_tools::log_processor::audit_db_timeout'),
 ) {
 
@@ -35,23 +34,16 @@ define mongodb_audit_tools::log_processor (
     fail('This module is for RedHat family of Linux')
   }
 
+  require mongodb_audit_tools::log_processor::install
+
   File {
     owner  => $script_owner,
     group  => $script_group,
   }
 
-  file { "${log_processor_dir}/${title}_log_processor.py":
+  file { "log_processor - ${title} config":
     ensure  => file,
-    mode    => $script_mode,
-    content => epp('mongodb_audit_tools/log_processor.py.epp', {
-      log_token          => "${log_processor_dir}/.${title}_log_tokens",
-      log_processor_log  => "${log_processor_dir}/.${title}_log_processor_log",
-      log_processor_conf => "${log_processor_dir}/${title}_log_processor.conf",
-    }),
-  }
-
-  file { "${log_processor_dir}/${title}_log_processor.conf":
-    ensure  => file,
+    path    => $config_file_path,
     mode    => '0600',
     content => epp('mongodb_audit_tools/log_processor.conf.epp', {
       audit_db_connection_string => $audit_db_connection_string,
@@ -68,7 +60,7 @@ define mongodb_audit_tools::log_processor (
       script_group               => $script_group,
       script_mode                => $script_mode,
     }),
-    require => File["${log_processor_dir}/${title}_log_processor.py"],
+    require => Class['mongodb_audit_tools::log_processor::install'],
   }
 
   file { "/lib/systemd/system/mongodb_log_processor_${title}.service":
@@ -85,7 +77,7 @@ define mongodb_audit_tools::log_processor (
       script_owner              => $script_owner,
       script_path               => "${log_processor_dir}/${title}_log_processor.py",
     }),
-    require => File["${log_processor_dir}/${title}_log_processor.py"],
+    require => File["log_processor - ${title} config"],
   }
 
   exec { "restart_systemd_daemon_log_processor_${title}":
@@ -97,6 +89,6 @@ define mongodb_audit_tools::log_processor (
   service { "mongodb_log_processor_${title}":
     ensure    => running,
     enable    => true,
-    subscribe => [File["${log_processor_dir}/${title}_log_processor.conf"],Exec["restart_systemd_daemon_log_processor_${title}"]],
+    subscribe => [File["log_processor - ${title} config"],Exec["restart_systemd_daemon_log_processor_${title}"]],
   }
 }
