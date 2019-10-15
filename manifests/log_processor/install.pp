@@ -25,7 +25,7 @@ class mongodb_audit_tools::log_processor::install (
     mode   => '0755',
   }
 
-  file { "${log_processor_dir}/${title}_log_processor.py":
+  file { "${log_processor_dir}/log_processor.py":
     ensure => file,
     mode   => $script_mode,
     source => 'puppet:///modules/mongodb_audit_tools/log_processor.py',

@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'mongodb_audit_tools::log_processor::cfg_svc' do
-  let(:pre_condition) { 'include mongodb_audit_tools::log_processor::install' }
+  let(:pre_condition) { "class { mongodb_audit_tools::log_processor::install: log_processor_dir => '/data/scripts' }" }
   let(:title) { 'logger' }
   let :params do
     {
@@ -24,12 +24,13 @@ describe 'mongodb_audit_tools::log_processor::cfg_svc' do
     it { is_expected.to compile }
 
     it {
-      is_expected.to contain_file('/data/scripts/logger.conf').with(
+      is_expected.to contain_file('log_processor - logger config').with(
         'ensure' => 'file',
+        'path'   => '/data/scripts/logger.conf',
         'owner'  => 'root',
         'group'  => 'root',
         'mode'   => '0600',
-      ).that_requires('File[/data/scripts/logger_log_processor.py]')
+      ).that_requires('Class[mongodb_audit_tools::log_processor::install]')
     }
 
     it {
@@ -38,7 +39,7 @@ describe 'mongodb_audit_tools::log_processor::cfg_svc' do
         'owner'  => 'root',
         'group'  => 'root',
         'mode'   => '0644',
-      ).that_requires('File[/data/scripts/logger_log_processor.py]')
+      ).that_requires('File[log_processor - logger config]')
     }
 
     it {
@@ -52,7 +53,7 @@ describe 'mongodb_audit_tools::log_processor::cfg_svc' do
       is_expected.to contain_service('mongodb_log_processor_logger').with(
         'ensure' => 'running',
         'enable' => true,
-      ).that_subscribes_to('File[/data/scripts/logger_log_processor.conf]').that_subscribes_to('Exec[restart_systemd_daemon_log_processor_logger]')
+      ).that_subscribes_to('File[log_processor - logger config]').that_subscribes_to('Exec[restart_systemd_daemon_log_processor_logger]')
     }
   end
 end

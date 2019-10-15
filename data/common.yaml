@@ -51,27 +51,27 @@ mongodb_audit_tools::deployment_config_grabber::cron_minute: '*'
 mongodb_audit_tools::deployment_config_grabber::cron_monthday: '*'
 mongodb_audit_tools::deployment_config_grabber::excluded_root_keys: 'mongoDbVersions,mongosqlds,backupVersions,agentVersion,monitoringVersions,uiBaseUrl,cpsModules,mongots'
 
-mongodb_audit_tools::log_processor::install:script_owner: *script_owner
-mongodb_audit_tools::log_processor::install:script_group: *script_group
-mongodb_audit_tools::log_processor::install:script_mode: *script_mode
-
-mongodb_audit_tools::log_processor::install::enable_audit_db_ssl: false
-mongodb_audit_tools::log_processor::install::enable_debugging: false
-mongodb_audit_tools::log_processor::install::enable_kerberos_debugging: false
-mongodb_audit_tools::log_processor::install::kerberos_keytab_path: ~
-mongodb_audit_tools::log_processor::install::kerberos_trace_path: ~
-mongodb_audit_tools::log_processor::install::audit_db_ssl_pem_file_path: ~
-mongodb_audit_tools::log_processor::install::audit_db_ssl_ca_file_path: ~
 mongodb_audit_tools::log_processor::install::script_owner: *script_owner
 mongodb_audit_tools::log_processor::install::script_group: *script_group
 mongodb_audit_tools::log_processor::install::script_mode: *script_mode
-mongodb_audit_tools::log_processor::install::audit_db_timeout: *timeout
-mongodb_audit_tools::log_processor::install::audit_log: ~
-mongodb_audit_tools::log_processor::install::python_path: *python_path
-mongodb_audit_tools::log_processor::install::elevated_ops_events:
+
+mongodb_audit_tools::log_processor::cfg_svc::enable_audit_db_ssl: false
+mongodb_audit_tools::log_processor::cfg_svc::enable_debugging: false
+mongodb_audit_tools::log_processor::cfg_svc::enable_kerberos_debugging: false
+mongodb_audit_tools::log_processor::cfg_svc::kerberos_keytab_path: ~
+mongodb_audit_tools::log_processor::cfg_svc::kerberos_trace_path: ~
+mongodb_audit_tools::log_processor::cfg_svc::audit_db_ssl_pem_file_path: ~
+mongodb_audit_tools::log_processor::cfg_svc::audit_db_ssl_ca_file_path: ~
+mongodb_audit_tools::log_processor::cfg_svc::script_owner: *script_owner
+mongodb_audit_tools::log_processor::cfg_svc::script_group: *script_group
+mongodb_audit_tools::log_processor::cfg_svc::script_mode: *script_mode
+mongodb_audit_tools::log_processor::cfg_svc::audit_db_timeout: *timeout
+mongodb_audit_tools::log_processor::cfg_svc::audit_log: ~
+mongodb_audit_tools::log_processor::cfg_svc::python_path: *python_path
+mongodb_audit_tools::log_processor::cfg_svc::elevated_ops_events:
   - 'createUser'
   - 'deleteUser'
-mongodb_audit_tools::log_processor::install::elevated_config_events:
+mongodb_audit_tools::log_processor::cfg_svc::elevated_config_events:
   - 'addShard'
   - 'addShardToZone'
   - 'balancerStart'
@@ -92,6 +92,6 @@ mongodb_audit_tools::log_processor::install::elevated_config_events:
   - 'splitChunk'
   - 'unsetSharding'
   - 'updateZoneKeyRange'
-mongodb_audit_tools::log_processor::install::elevated_app_events:
+mongodb_audit_tools::log_processor::cfg_svc::elevated_app_events:
   - 'dropCollection'
   - 'dropDatabase'
