@@ -58,7 +58,6 @@ define mongodb_audit_tools::log_processor::cfg_svc (
       enable_debugging           => $enable_debugging,
       script_owner               => $script_owner,
       script_group               => $script_group,
-      script_mode                => $script_mode,
     }),
     require => Class['mongodb_audit_tools::log_processor::install'],
   }
