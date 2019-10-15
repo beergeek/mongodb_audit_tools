@@ -7,8 +7,6 @@
 define mongodb_audit_tools::log_processor::cfg_svc (
   Mongodb_audit_tools::MongoDBURL $audit_db_connection_string,
   Stdlib::Absolutepath            $log_processor_dir,
-  String[1]                       $om_token,
-  String[1]                       $om_username,
   Stdlib::Absolutepath            $config_file_path             = "${log_processor_dir}/${title}.conf",
   Stdlib::Absolutepath            $log_file_path                = "${log_processor_dir}/${title}.log",
 
