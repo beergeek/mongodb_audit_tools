@@ -8,41 +8,25 @@ variables:
   - &timeout 1000
   - &python_path '/bin/python3'
 
-mongodb_audit_tools::ops_manager_event_watcher::enable_debugging: false
-mongodb_audit_tools::ops_manager_event_watcher::enable_kerberos_debugging: false
-mongodb_audit_tools::ops_manager_event_watcher::audit_db_timeout: *timeout
-mongodb_audit_tools::ops_manager_event_watcher::om_db_timeout: *timeout
-mongodb_audit_tools::ops_manager_event_watcher::script_owner: *script_owner
-mongodb_audit_tools::ops_manager_event_watcher::script_group: *script_group
-mongodb_audit_tools::ops_manager_event_watcher::script_mode: *script_mode
-mongodb_audit_tools::ops_manager_event_watcher::change_stream_pipeline: ~
-mongodb_audit_tools::ops_manager_event_watcher::kerberos_keytab_path: ~
-mongodb_audit_tools::ops_manager_event_watcher::enable_om_db_ssl: false
-mongodb_audit_tools::ops_manager_event_watcher::enable_audit_db_ssl: false
-mongodb_audit_tools::ops_manager_event_watcher::audit_db_ssl_pem_file_path: ~
-mongodb_audit_tools::ops_manager_event_watcher::audit_db_ssl_ca_file_path: ~
-mongodb_audit_tools::ops_manager_event_watcher::om_db_ssl_pem_file_path: ~
-mongodb_audit_tools::ops_manager_event_watcher::om_db_ssl_ca_file_path: ~
-mongodb_audit_tools::ops_manager_event_watcher::kerberos_trace_path: ~
-mongodb_audit_tools::ops_manager_event_watcher::python_path: *python_path
-
-mongodb_audit_tools::ops_manager_config_watcher::enable_debugging: false
-mongodb_audit_tools::ops_manager_config_watcher::enable_kerberos_debugging: false
-mongodb_audit_tools::ops_manager_config_watcher::audit_db_timeout: *timeout
-mongodb_audit_tools::ops_manager_config_watcher::om_db_timeout: *timeout
-mongodb_audit_tools::ops_manager_config_watcher::script_owner: *script_owner
-mongodb_audit_tools::ops_manager_config_watcher::script_group: *script_group
-mongodb_audit_tools::ops_manager_config_watcher::script_mode: *script_mode
-mongodb_audit_tools::ops_manager_config_watcher::change_stream_pipeline: ~
-mongodb_audit_tools::ops_manager_config_watcher::kerberos_keytab_path: ~
-mongodb_audit_tools::ops_manager_config_watcher::enable_om_db_ssl: false
-mongodb_audit_tools::ops_manager_config_watcher::enable_audit_db_ssl: false
-mongodb_audit_tools::ops_manager_config_watcher::audit_db_ssl_pem_file_path: ~
-mongodb_audit_tools::ops_manager_config_watcher::audit_db_ssl_ca_file_path: ~
-mongodb_audit_tools::ops_manager_config_watcher::om_db_ssl_pem_file_path: ~
-mongodb_audit_tools::ops_manager_config_watcher::om_db_ssl_ca_file_path: ~
-mongodb_audit_tools::ops_manager_config_watcher::kerberos_trace_path: ~
-mongodb_audit_tools::ops_manager_config_watcher::python_path: *python_path
+mongodb_audit_tools::event_watcher::enable_debugging: false
+mongodb_audit_tools::event_watcher::enable_kerberos_debugging: false
+mongodb_audit_tools::event_watcher::audit_db_timeout: *timeout
+mongodb_audit_tools::event_watcher::om_db_timeout: *timeout
+mongodb_audit_tools::event_watcher::script_owner: *script_owner
+mongodb_audit_tools::event_watcher::script_group: *script_group
+mongodb_audit_tools::event_watcher::script_mode: *script_mode
+mongodb_audit_tools::event_watcher::change_stream_pipeline: ~
+mongodb_audit_tools::event_watcher::kerberos_keytab_path: ~
+mongodb_audit_tools::event_watcher::enable_om_db_ssl: false
+mongodb_audit_tools::event_watcher::enable_audit_db_ssl: false
+mongodb_audit_tools::event_watcher::audit_db_ssl_pem_file_path: ~
+mongodb_audit_tools::event_watcher::audit_db_ssl_ca_file_path: ~
+mongodb_audit_tools::event_watcher::om_db_ssl_pem_file_path: ~
+mongodb_audit_tools::event_watcher::om_db_ssl_ca_file_path: ~
+mongodb_audit_tools::event_watcher::kerberos_trace_path: ~
+mongodb_audit_tools::event_watcher::python_path: *python_path
+mongodb_audit_tools::event_watcher::config_file_path: ~
+mongodb_audit_tools::event_watcher::log_file_path: ~
 
 mongodb_audit_tools::deployment_config_grabber::audit_db_ssl_ca_file_path: ~
 mongodb_audit_tools::deployment_config_grabber::audit_db_ssl_pem_file_path: ~
@@ -71,8 +55,6 @@ mongodb_audit_tools::deployment_config_grabber::excluded_root_keys: 'mongoDbVers
 mongodb_audit_tools::log_processor::enable_audit_db_ssl: false
 mongodb_audit_tools::log_processor::enable_debugging: false
 mongodb_audit_tools::log_processor::enable_kerberos_debugging: false
-mongodb_audit_tools::log_processor::elevated_ops_events: ~
-mongodb_audit_tools::log_processor::elevated_app_events: ~
 mongodb_audit_tools::log_processor::kerberos_keytab_path: ~
 mongodb_audit_tools::log_processor::kerberos_trace_path: ~
 mongodb_audit_tools::log_processor::audit_db_ssl_pem_file_path: ~
@@ -85,6 +67,30 @@ mongodb_audit_tools::log_processor::audit_log: ~
 mongodb_audit_tools::log_processor::python_path: *python_path
 mongodb_audit_tools::log_processor::config_file_path: ~
 mongodb_audit_tools::log_processor::log_file_path: ~
-mongodb_audit_tools::log_processor::elevated_ops_events: 'createUser,deleteUser'
-mongodb_audit_tools::log_processor::elevated_config_events: 'shutdown,setParameter,setFeatureCompatibilityVersion,addShard,addShardToZone,balancerStart,balancerStop,enableSharding,flushRouterConfig,moveChunk,mergeChunks,removeShard,removeShardFromZone,setShardVersion,shardCollection,splitChunk,unsetSharding,updateZoneKeyRange,replSetReconfig,replSetInitiate'
-mongodb_audit_tools::log_processor::elevated_app_events: 'dropCollection,dropDatabase'
+mongodb_audit_tools::log_processor::elevated_ops_events:
+  - 'createUser'
+  - 'deleteUser'
+mongodb_audit_tools::log_processor::elevated_config_events:
+  - 'addShard'
+  - 'addShardToZone'
+  - 'balancerStart'
+  - 'balancerStop'
+  - 'enableSharding'
+  - 'flushRouterConfig'
+  - 'mergeChunks'
+  - 'moveChunk'
+  - 'removeShard'
+  - 'removeShardFromZone'
+  - 'replSetInitiate'
+  - 'replSetReconfig'
+  - 'setFeatureCompatibilityVersion'
+  - 'setParameter'
+  - 'setShardVersion'
+  - 'shardCollection'
+  - 'shutdown'
+  - 'splitChunk'
+  - 'unsetSharding'
+  - 'updateZoneKeyRange'
+mongodb_audit_tools::log_processor::elevated_app_events:
+  - 'dropCollection'
+  - 'dropDatabase'

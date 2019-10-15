@@ -50,6 +50,8 @@ class mongodb_audit_tools::event_watcher (
   Optional[Stdlib::Absolutepath]  $om_db_ssl_pem_file_path,
   Optional[Stdlib::Absolutepath]  $om_db_ssl_ca_file_path,
   Optional[Stdlib::Absolutepath]  $python_path,
+  Optional[Stdlib::Absolutepath]  $config_file_path,
+  Optional[Stdlib::Absolutepath]  $log_file_path,
   String[1]                       $om_token,
   String[1]                       $om_username,
   String[1]                       $script_owner,
@@ -101,14 +103,16 @@ class mongodb_audit_tools::event_watcher (
   file { '/lib/systemd/system/mongodb_event_watcher.service':
     ensure  => file,
     mode    => '0644',
-    content => epp('mongodb_audit_tools/event_watcher.service.epp', {
+    content => epp('mongodb_audit_tools/service.epp', {
+      config_file_path          => $config_file_path,
       enable_kerberos_debugging => $enable_kerberos_debugging,
       kerberos_keytab_path      => $kerberos_keytab_path,
       kerberos_trace_path       => $kerberos_trace_path,
+      log_file_path             => $log_file_path,
+      python_path               => $python_path,
       script_group              => $script_group,
       script_owner              => $script_owner,
       script_path               => "${event_watcher_dir}/event_watcher.py",
-      python_path               => $python_path,
     }),
     require => File["${event_watcher_dir}/event_watcher.py"],
   }
