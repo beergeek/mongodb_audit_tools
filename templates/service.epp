@@ -11,7 +11,7 @@ Environment="KRB5_CLIENT_KTNAME=<%= $kerberos_keytab_path %>"
 <% if $kerberos_keytab_path and $debug_kerberos {-%>
 Environment="KRB5_TRACE=<%= $kerberos_trace_path %>"
 <% } -%>
-ExecStart=<%= $python_path %> <%= $script_path %> <% if $config_file_path {%>-c <%= $config_file_path %> <% } %><% if $log_file_path {%>-l <%= $log_file_path %><% } %>
+ExecStart=<%= $python_path %> -u <%= $script_path %> <% if $config_file_path {%>-c <%= $config_file_path %> <% } %><% if $log_file_path {%>-l <%= $log_file_path %><% } %>
 Type=simple
 
 [Install]

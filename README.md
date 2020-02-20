@@ -1,8 +1,6 @@
 # mongodb_audit_tools
 
-Welcome to your new module. A short overview of the generated parts can be found in the PDK documentation at https://puppet.com/pdk/latest/pdk_generating_modules.html .
-
-The README template below provides a starting point with details about what information to include in your README.
+This module installs and maintains various auditing tools for MongoDB and Ops Manager.
 
 #### Table of Contents
 
@@ -17,9 +15,11 @@ The README template below provides a starting point with details about what info
 
 ## Description
 
-Briefly tell users why they might want to use your module. Explain what your module does and what kind of problems users can solve with it.
+The module manages the following tools
 
-This should be a fairly short description helps the user decide if your module is what they want.
+* log_processor.py, log_processor config file(s) and service(s)
+* deployment_configs.py and the configuration file
+* event_watcher.py, condfiguration file and service
 
 ## Setup
 
